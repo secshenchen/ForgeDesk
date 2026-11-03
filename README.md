@@ -135,4 +135,3 @@ ForgeDesk/
 ## 参与与扩展
 
 参见 [贡献指南](CONTRIBUTING.md)、[模块规范](docs/modules/README.md)、[安全政策](SECURITY.md)、[变更记录](CHANGELOG.md) 和 [CI 与发行](docs/development/release.md)。未来可扩展 Linux、更多模块和受控插件机制。版权主体尚待项目所有者确认，详见 [NOTICE](NOTICE)。
-

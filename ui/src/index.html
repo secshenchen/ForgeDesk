@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10151e">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>ForgeDesk · 工作台</title>
+  <link rel="icon" href="./assets/forgedesk.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles/main.css">
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主内容</a>
+  <aside class="sidebar">
+    <a class="brand" href="#home"><img src="./assets/forgedesk.svg" alt="" width="36" height="36"><span>ForgeDesk<small>技术工作平台</small></span></a>
+    <nav aria-label="工作台导航" id="navigation"></nav>
+    <div class="sidebar-foot">基础设施预览 <span id="version"></span></div>
+  </aside>
+  <div class="workspace">
+    <header class="toolbar">
+      <form id="search-form" role="search">
+        <label class="visually-hidden" for="search">搜索功能中心</label>
+        <input type="search" id="search" placeholder="搜索功能中心…" autocomplete="off">
+      </form>
+      <a class="control" href="#settings">设置</a>
+      <button class="control" id="theme" type="button">切换主题</button>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer>
+      <span id="platform-status"></span>
+      <span id="notice" role="status" aria-live="polite"></span>
+    </footer>
+  </div>
+  <noscript>ForgeDesk 需要启用 JavaScript 来显示工作台。</noscript>
+</body>
+</html>

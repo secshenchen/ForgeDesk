@@ -1,0 +1,57 @@
+# Generated build and release output, at any build-tree depth.
+build/
+dist/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+compile_commands.json
+CMakeUserPresets.json
+*.o
+*.obj
+*.pch
+*.gch
+*.pdb
+*.ilk
+*.idb
+*.exp
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.dmp
+
+# Local scratch, acceptance outputs and temporary test data.
+/work/
+/outputs/
+/tests/tmp/
+/tests/test-output/
+*.tmp
+*.bak
+*.log
+
+# User data belongs outside source control; keep schema/migrations trackable.
+/user-data/
+/local-config/
+*.user
+*.suo
+.vs/
+.vscode/*.local.json
+*~
+.DS_Store
+Thumbs.db
+
+# Secrets: examples must use non-secret values.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+credentials.local.*
+secrets.local.*

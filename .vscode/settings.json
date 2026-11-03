@@ -1,0 +1,22 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4,
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false
+  },
+  "[json]": {
+    "editor.tabSize": 2
+  },
+  "[html][css][javascript][yaml]": {
+    "editor.tabSize": 2
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "C_Cpp.clang_format_style": "file",
+  "cmake.configureOnOpen": false
+}

@@ -1,0 +1,49 @@
+name: Pages build and optional deployment
+'on':
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to the repository's configured GitHub Pages environment
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: forgedesk-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/build-web.mjs
+      - run: node scripts/check-web.mjs
+      - name: Configure Pages
+        if: inputs.deploy
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist/web
+
+  deploy:
+    if: inputs.deploy
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

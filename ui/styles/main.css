@@ -1,0 +1,77 @@
+:root {
+  color-scheme: light;
+  --bg: #f2f5f8;
+  --panel: #fff;
+  --text: #172537;
+  --muted: #516278;
+  --border: #ced7e2;
+  --accent: #126b57;
+  --wash: #e5f4ef;
+  font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #10151e;
+  --panel: #171f2b;
+  --text: #edf3fc;
+  --muted: #aab9cc;
+  --border: #334256;
+  --accent: #73dfbd;
+  --wash: #18352f;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: grid; grid-template-columns: 15rem minmax(0, 1fr); background: var(--bg); color: var(--text); }
+a { color: inherit; text-decoration: none; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+button, input, select { font: inherit; color: inherit; }
+.sidebar { display: flex; flex-direction: column; gap: 1.5rem; background: var(--panel); border-inline-end: 1px solid var(--border); padding: 1.3rem 1rem; }
+.brand { display: flex; gap: .7rem; align-items: center; font-weight: 750; font-size: 1.15rem; }
+.brand small, .sidebar-foot { display: block; font-size: .75rem; color: var(--muted); font-weight: 500; }
+.sidebar-foot { margin-top: auto; padding-block: .75rem; }
+nav { display: grid; gap: .2rem; }
+nav a { padding: .62rem .8rem; border-radius: .5rem; font-size: .88rem; }
+nav a:hover, nav [aria-current="page"] { color: var(--accent); background: var(--wash); }
+.workspace { min-width: 0; display: flex; flex-direction: column; }
+.toolbar, footer { display: flex; align-items: center; gap: .75rem; background: var(--panel); padding: .85rem clamp(1rem, 3vw, 2.5rem); border-block-end: 1px solid var(--border); }
+.toolbar form { flex: 1; min-width: 0; }
+.toolbar input { width: min(100%, 29rem); }
+input, select, .control { background: var(--panel); border: 1px solid var(--border); border-radius: .55rem; padding: .55rem .75rem; }
+.control { display: inline-block; white-space: nowrap; cursor: pointer; }
+.control:hover, .card:hover { border-color: var(--accent); }
+main { flex: 1; width: 100%; max-width: 85rem; padding: clamp(1.2rem, 3vw, 2.6rem); }
+h1 { font-size: clamp(1.65rem, 3.3vw, 2.65rem); letter-spacing: -.035em; margin: .4rem 0 .6rem; }
+h2 { font-size: 1rem; margin: 0 0 .65rem; }
+p { color: var(--muted); line-height: 1.6; }
+.eyebrow, .badge { color: var(--accent); font-size: .78rem; font-weight: 700; }
+.badge { background: var(--wash); padding: .25rem .5rem; border-radius: 1rem; }
+.section { margin-top: 1.6rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: .8rem; }
+.card, .panel { background: var(--panel); border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; }
+.card p, .panel p { margin: .55rem 0 0; font-size: .9rem; }
+.card .badge { display: inline-block; margin-top: .8rem; }
+.panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .8rem; }
+.panel a, .back { color: var(--accent); text-decoration: underline; }
+.panel dl { display: grid; grid-template-columns: 1fr auto; gap: .7rem; }
+.panel dd { margin: 0; color: var(--muted); }
+footer { flex-wrap: wrap; border-block-start: 1px solid var(--border); border-block-end: 0; color: var(--muted); font-size: .8rem; }
+.file-manager { display: grid; gap: .85rem; }
+.file-manager input { max-width: 100%; }
+.file-manager ul { margin: 0; padding-inline-start: 1.4rem; }
+.file-manager li { margin-block: .65rem; overflow-wrap: anywhere; }
+.file-manager button { margin-inline: .35rem; }
+.file-manager output { display: block; overflow-wrap: anywhere; font-family: monospace; }
+.data-preview { max-height: 28rem; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.visually-hidden, .skip:not(:focus) { position: absolute; clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; }
+.skip:focus { position: fixed; top: .5rem; left: .5rem; z-index: 3; padding: .6rem; background: var(--panel); }
+
+@media (max-width: 760px) {
+  body { grid-template-columns: 1fr; }
+  .sidebar { gap: .7rem; padding: .85rem; border-inline-end: 0; border-block-end: 1px solid var(--border); }
+  nav { display: flex; overflow-x: auto; }
+  nav a { flex-shrink: 0; }
+  .sidebar-foot { display: none; }
+  .toolbar { flex-wrap: wrap; gap: .5rem; padding-inline: .85rem; }
+  .toolbar form { min-width: min(100%, 10rem); }
+}

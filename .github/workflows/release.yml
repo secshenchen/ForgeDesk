@@ -1,0 +1,59 @@
+name: Release candidate artifacts
+'on':
+  workflow_dispatch:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: read
+
+jobs:
+  windows-bootstrap:
+    name: Windows x64 Bootstrap zip
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify version tag
+        shell: pwsh
+        run: |
+          $version = (Get-Content VERSION -Raw).Trim()
+          if ($version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid VERSION' }
+          if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") {
+            throw 'Tag must match VERSION'
+          }
+      - run: cmake --preset windows-msvc-release
+      - run: cmake --build --preset windows-msvc-release --parallel
+      - run: ctest --preset windows-msvc-release
+      - name: Create Bootstrap archive
+        shell: pwsh
+        run: ./scripts/Package-WindowsBootstrap.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forgedesk-windows-x64-bootstrap
+          path: dist/release/*-windows-x64-bootstrap.zip
+          if-no-files-found: error
+
+  web:
+    name: Static Web archive
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/build-web.mjs
+      - run: node scripts/check-web.mjs
+      - name: Create Web archive
+        run: |
+          version=$(tr -d '\r\n' < VERSION)
+          if [[ "$GITHUB_REF_TYPE" == tag && "$GITHUB_REF_NAME" != "v$version" ]]; then
+            echo 'Tag must match VERSION' >&2
+            exit 1
+          fi
+          mkdir -p dist/release
+          tar -czf "dist/release/ForgeDesk-${version}-web.tar.gz" -C dist/web .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: forgedesk-web
+          path: dist/release/*-web.tar.gz
+          if-no-files-found: error

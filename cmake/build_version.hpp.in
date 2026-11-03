@@ -1,0 +1,3 @@
+#pragma once
+
+#define FORGEDESK_VERSION "@PROJECT_VERSION@"

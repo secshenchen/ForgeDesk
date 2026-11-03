@@ -1,0 +1,14 @@
+{
+  "name": "ForgeDesk 技术工作台",
+  "short_name": "ForgeDesk",
+  "id": "./",
+  "scope": "./",
+  "start_url": "./",
+  "lang": "zh-CN",
+  "display": "standalone",
+  "background_color": "#10151e",
+  "theme_color": "#10151e",
+  "icons": [
+    { "src": "./assets/forgedesk.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

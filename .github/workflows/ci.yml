@@ -1,0 +1,51 @@
+name: CI
+'on':
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-msvc:
+    name: Windows MSVC x64
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v6
+      - name: Configure Debug
+        run: cmake --preset windows-msvc-debug
+      - name: Build Debug
+        run: cmake --build --preset windows-msvc-debug --parallel
+      - name: Test Debug
+        run: ctest --preset windows-msvc-debug
+      - name: Record optional platform coverage
+        run: Write-Output "WebView2 SDK and Emscripten are optional and are excluded from this native build."
+
+  linux-gcc:
+    name: Ubuntu GCC C++23 and format
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Format check
+        run: git ls-files -z -- '*.cpp' '*.hpp' | xargs -0 clang-format-18 --dry-run --Werror
+      - name: Configure Release
+        run: cmake -S . -B build/linux-gcc -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++-13
+      - name: Build Release
+        run: cmake --build build/linux-gcc --parallel
+      - name: Test Release
+        run: ctest --test-dir build/linux-gcc --output-on-failure --no-tests=error
+
+  web:
+    name: Web bundle and offline browser
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/build-web.mjs
+      - run: node scripts/check-web.mjs
+      - run: node tests/unit/csv-test.mjs
+      - run: node tests/integration/web-smoke.mjs "$(command -v google-chrome)"
