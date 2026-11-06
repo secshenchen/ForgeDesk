@@ -1,0 +1,2 @@
+#pragma once
+inline constexpr const wchar_t* desktop_smoke = LR"FORGETEST(@FORGEDESK_DESKTOP_SMOKE@)FORGETEST";

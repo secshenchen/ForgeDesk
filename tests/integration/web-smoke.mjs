@@ -112,6 +112,14 @@ try {
   await evaluate('document.querySelector("#file-results button").click()');
   await until('SHA-256 of selected file', () => evaluate(
     'document.querySelector("#file-results output").textContent === "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"'));
+  await evaluate(`(() => {
+    const filter = document.querySelector('#file-filter');
+    filter.value = '';
+    filter.dispatchEvent(new Event('input'));
+    Array.from(document.querySelectorAll('main button')).find(b => b.textContent === '校验全部匹配文件').click();
+  })()`);
+  await until('batch SHA-256', () => evaluate(
+    'Array.from(document.querySelectorAll("#file-results output")).filter(o => /^[0-9a-f]{64}$/.test(o.textContent)).length === 2'));
   await evaluate('location.hash = "data"');
   await until('data workshop panel', () => evaluate('Boolean(document.querySelector(".data-preview"))'));
   await evaluate(`(() => {
@@ -143,7 +151,7 @@ try {
   assert.equal(await evaluate('document.querySelectorAll(".card").length'), 1);
   await evaluate('document.querySelector(".card").click()');
   await until('module details', () => evaluate('document.querySelector("h1")?.textContent === "磁盘实验室"'));
-  assert.match(await evaluate('document.querySelector("main").textContent'), /Coming Soon/);
+  assert.match(await evaluate('document.querySelector("main").textContent'), /最大文件/);
   await evaluate('document.querySelector(".back").click()');
   await until('back to workbench', () => evaluate('document.querySelector("h1")?.textContent === "技术工作台"'));
   await evaluate('document.querySelector(".toolbar a").click()');

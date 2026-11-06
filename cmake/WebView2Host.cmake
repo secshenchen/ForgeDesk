@@ -20,9 +20,13 @@ if(NOT FORGEDESK_WEBVIEW2_SDK OR NOT EXISTS "${webview_native}/include/WebView2.
     message(FATAL_ERROR "WebView2 SDK missing. Set FORGEDESK_WEBVIEW2_SDK to an extracted official SDK package.")
 endif()
 find_program(FORGEDESK_NODE node REQUIRED)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/desktop-smoke.js" FORGEDESK_DESKTOP_SMOKE)
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/tests/integration/desktop-smoke.js")
+configure_file(cmake/desktop_smoke.hpp.in generated/desktop_smoke.hpp @ONLY)
 add_executable(forgedesk_desktop WIN32 apps/windows/desktop.cpp platform/windows/desktop_paths.cpp)
 target_compile_definitions(forgedesk_desktop PRIVATE UNICODE _UNICODE NOMINMAX)
-target_include_directories(forgedesk_desktop PRIVATE "${webview_native}/include" platform/windows)
+target_compile_options(forgedesk_desktop PRIVATE /utf-8)
+target_include_directories(forgedesk_desktop PRIVATE "${webview_native}/include" platform/windows "${CMAKE_CURRENT_BINARY_DIR}/generated")
 target_link_libraries(forgedesk_desktop PRIVATE forgedesk_core "${webview_loader}"
     ole32 shell32 shlwapi version uuid)
 add_custom_target(forgedesk_desktop_ui ALL

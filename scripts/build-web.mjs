@@ -18,6 +18,7 @@ const files = new Map([
   ['src/main.js', 'ui/src/main.js'],
   ['src/file-manager.js', 'ui/src/file-manager.js'],
   ['src/data-workshop.js', 'ui/src/data-workshop.js'],
+  ['src/workspace-tools.js', 'ui/src/workspace-tools.js'],
   ['styles/main.css', 'ui/styles/main.css'],
   ['assets/forgedesk.svg', 'ui/assets/forgedesk.svg'],
   ['platform/browser-services.js', 'platform/web/browser-services.js'],

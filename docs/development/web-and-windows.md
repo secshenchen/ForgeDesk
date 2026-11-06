@@ -35,7 +35,9 @@ cmake --build build/windows-desktop --config Release --target forgedesk_desktop_
 ./build/windows-desktop/Release/forgedesk_desktop.exe
 ```
 
-保持生成的 ui 目录与 EXE 同级。WebView2 用虚拟 HTTPS 主机映射本地资源，在用户 LocalAppData 的 ForgeDesk 目录保存浏览器配置。宿主限制顶层导航、弹窗和权限请求，原生消息和宿主对象默认关闭。后续桥接只开放经过验证的消息和明确授权的操作。
+保持生成的 ui 目录与 EXE 同级。WebView2 用虚拟 HTTPS 主机映射本地资源，在用户 LocalAppData 的 ForgeDesk 目录保存浏览器配置。宿主限制导航、弹窗和权限请求。应用入口可发出固定的系统和卷诊断请求，其他消息会被忽略。
+
+磁盘实验室读取带盘符的 Windows 固定卷容量。故障预测由存储驱动提供，权限不足或设备不支持时显示不可用。系统诊断中心读取 Windows 原生处理器架构、逻辑处理器数、物理内存与运行时长。
 
 SDK 用于编译，Runtime 用于运行。Evergreen 在线引导程序需要网络，离线机器使用同架构的 Evergreen Standalone 安装包，安装后运行宿主。Fixed Version 部署把经许可分发的匹配架构 Runtime 解包在 EXE 同级 `Runtime/`，其中直接包含 `msedgewebview2.exe`。应用方负责固定版本的补丁和更新。部署方式及 Windows 版本相关权限要求以 [微软 WebView2 部署文档](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution) 为准。
 

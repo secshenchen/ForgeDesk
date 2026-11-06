@@ -10,6 +10,7 @@ const files = new Map([
   ['src/main.js', ['src/main.js', 'text/javascript']],
   ['src/file-manager.js', ['src/file-manager.js', 'text/javascript']],
   ['src/data-workshop.js', ['src/data-workshop.js', 'text/javascript']],
+  ['src/workspace-tools.js', ['src/workspace-tools.js', 'text/javascript']],
   ['src/build.js', ['src/build.js', 'text/javascript']],
   ['platform/browser-services.js', ['platform/browser-services.js', 'text/javascript']],
   ['manifest.webmanifest', ['manifest.webmanifest', 'application/manifest+json']],

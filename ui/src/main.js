@@ -1,19 +1,20 @@
 import { version, desktop } from './build.js';
 import { fileManager } from './file-manager.js';
 import { dataWorkshop } from './data-workshop.js';
+import { workspaceTool } from './workspace-tools.js';
 import { browserCapabilities, savedTheme, saveTheme } from '../platform/browser-services.js';
 
 const modules = [
   ['files', '文件管理中心', '浏览、筛选和校验本地文件'],
   ['data', '数据工坊', '本地 CSV 导入、筛选与 JSON 导出'],
-  ['disks', '磁盘实验室', '经授权的磁盘分析和实验'],
-  ['system', '系统诊断中心', '系统信息与诊断'],
-  ['network', '网络实验室', '网络检查与诊断'],
-  ['developer', '开发者工具箱', '开发辅助工具'],
-  ['security', '文件安全中心', '完整性与安全分析'],
-  ['text', '文本与搜索中心', '文本处理与检索'],
-  ['reports', '报告与统计中心', '本地报告与统计'],
-  ['extensions', '扩展与插件中心', '扩展管理与受控插件']
+  ['disks', '磁盘实验室', '统计所选文件夹的大小和最大文件'],
+  ['system', '系统诊断中心', '查看宿主环境和应用存储状态'],
+  ['network', '网络实验室', '计算 IPv4/CIDR 地址范围'],
+  ['developer', '开发者工具箱', '校验和格式化 JSON'],
+  ['security', '文件安全中心', '比对文件的 SHA-256 摘要'],
+  ['text', '文本与搜索中心', '搜索文本并显示匹配行号'],
+  ['reports', '报告与统计中心', '统计 CSV 的行、列和空单元格'],
+  ['extensions', '扩展与插件中心', '在本地登记扩展名称和说明']
 ];
 
 const main = document.querySelector('main');
@@ -74,7 +75,7 @@ function filterModules() {
   for (const [id, name, description] of matches) {
     const card = link(id, undefined, 'card');
     card.append(element('h2', name), element('p', description),
-      element('span', ['files', 'data'].includes(id) ? '可用' : '计划中', 'badge'));
+      element('span', '可用', 'badge'));
     cards.append(card);
   }
   results.textContent = matches.length ? `${matches.length} 个功能中心` : '没有匹配的功能中心';
@@ -151,7 +152,10 @@ function route() {
   } else if (page === 'data') {
     heading('数据工坊', '导入 CSV 并在本机筛选、预览与导出记录。');
     main.append(dataWorkshop());
-  } else heading(module[1], module[2], '计划中 / Coming Soon');
+  } else {
+    heading(module[1], module[2]);
+    main.append(workspaceTool(page));
+  }
 }
 
 for (const [id, name] of [['home', '工作台'], ...modules, ['settings', '设置'], ['logs', '日志状态']]) {
